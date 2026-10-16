@@ -241,37 +241,111 @@
     parallax();
   }
 
-  // parallax: a contour map behind the portrait and a few hills in the margins, each at its own depth
+  // parallax: topographic contour lines behind the portrait and a few hills in the margins, each map at its own depth.
+  // Every map is one smooth height field traced with marching squares, so its lines never cross.
   function terrain(H, narrow, box, main) {
     var rand = rng(20170901);
-    function hill(hx, hy, rings, r0, gap, col, k, sw) {
-      var g = el('g', {}, bg), p1 = rand() * 6.28, p2 = rand() * 6.28, p3 = rand() * 6.28, sx = 1.2 + rand() * 0.35;
-      for (var j = 0; j < rings; j++) {
-        var R = r0 + j * gap, d = '';
-        for (var s = 0; s <= 72; s++) {
-          var th = s / 72 * Math.PI * 2;
-          var rr = R * (1 + 0.15 * Math.sin(2 * th + p1 + j * 0.08) + 0.08 * Math.sin(3 * th + p2 - j * 0.05) + 0.04 * Math.sin(5 * th + p3));
-          d += (s ? 'L' : 'M') + f(hx + Math.cos(th) * rr * sx) + ' ' + f(hy + Math.sin(th) * rr) + ' ';
+    // one height field (a few soft peaks, gently warped) traced into closed contour lines
+    function topo(cx, cy, rx, ry, peaks, step, tint, k) {
+      var g = narrow ? 6 : 8, x0 = cx - rx, y0 = cy - ry, nx = Math.ceil(rx * 2 / g), ny = Math.ceil(ry * 2 / g), w = nx + 1;
+      var p1 = rand() * 6.28, p2 = rand() * 6.28, wa = (narrow ? 14 : 30) + rand() * 14, wf = (narrow ? 0.011 : 0.0055) + rand() * 0.0025;
+      var z = new Float32Array(w * (ny + 1)), top = 0;
+      for (var j = 0; j <= ny; j++) for (var i = 0; i <= nx; i++) {
+        var v = 0;
+        if (i && j && i < nx && j < ny) {
+          var x = x0 + i * g, y = y0 + j * g, wx = x + wa * Math.sin(y * wf + p1), wy = y + wa * Math.sin(x * wf * 1.3 + p2);
+          for (var q = 0; q < peaks.length; q++) {
+            var pk = peaks[q], dx = (wx - pk.x) / pk.sx, dy = (wy - pk.y) / pk.sy;
+            v += pk.a * Math.exp(-(dx * dx + dy * dy) / 2);
+          }
         }
-        el('path', { d: d + 'Z', fill: 'none', stroke: col, 'stroke-width': sw }, g);
+        z[j * w + i] = v; if (v > top) top = v;
       }
-      S.para.push({ node: g, base: hy, k: k });
+      var grp = el('g', {}, bg), n = Math.floor((top - 0.1) / step) + 1;
+      for (var L = 0; L < n; L++) {
+        var index = L % 4 === 2, op = f(0.4 + 0.6 * Math.min(1, L / 3));
+        trace(z, nx, ny, g, x0, y0, 0.1 + L * step).forEach(function (pts) {
+          el('path', { d: smooth(pts), fill: 'none', stroke: index ? 'var(--stone-band)' : tint, 'stroke-width': index ? 1.5 : 1, opacity: op }, grp);
+        });
+      }
+      S.para.push({ node: grp, base: cy, k: k });
     }
     var ph = $('.ph');
     if (ph) {
-      var pb = box(ph), pcx = pb.l + pb.h / 2, pcy = pb.t + pb.h / 2;
-      hill(pcx + (narrow ? 60 : 40), pcy - 20, narrow ? 6 : 9, narrow ? 70 : 110, narrow ? 16 : 22, 'var(--contour-a)', 0.2, 1.1);
-      hill(pcx - (narrow ? 20 : 150), pcy + (narrow ? 60 : 120), 5, narrow ? 30 : 46, narrow ? 13 : 18, 'var(--contour-c)', 0.1, 1.2);
+      var pb = box(ph), pcx = pb.l + pb.h / 2, pcy = pb.t + pb.h / 2, s = narrow ? 0.5 : 1;
+      topo(pcx, pcy + 30 * s, 480 * s, 400 * s, [
+        { x: pcx + 50 * s, y: pcy - 30 * s, sx: 150 * s, sy: 115 * s, a: 1 },
+        { x: pcx - 190 * s, y: pcy + 170 * s, sx: 95 * s, sy: 80 * s, a: 0.72 },
+        { x: pcx + 230 * s, y: pcy + 200 * s, sx: 70 * s, sy: 60 * s, a: 0.45 },
+      ], 0.085, 'var(--contour-a)', 0.12);
     } else {
-      var sb = box(startEl);
-      hill(main.r - (narrow ? 20 : 120), sb.t + 60, narrow ? 5 : 8, narrow ? 50 : 90, narrow ? 14 : 20, 'var(--contour-a)', 0.2, 1.1);
+      var sb = box(startEl), hx0 = main.r - (narrow ? 20 : 120), hy0 = sb.t + 60, s0 = narrow ? 0.6 : 1;
+      topo(hx0, hy0, 300 * s0, 260 * s0, [
+        { x: hx0, y: hy0, sx: 105 * s0, sy: 85 * s0, a: 1 },
+        { x: hx0 - 120 * s0, y: hy0 + 90 * s0, sx: 60 * s0, sy: 55 * s0, a: 0.55 },
+      ], 0.1, 'var(--contour-a)', 0.2);
     }
     var step = narrow ? 1400 : 900, n = Math.ceil(H / step);
     for (var i = 1; i < n; i++) {
-      var right = i % 2 === 1;
-      var hx = right ? main.r + (narrow ? 10 : 70) : main.l + (narrow ? 10 : 40);
-      hill(hx + (rand() - 0.5) * 60, i * step + (rand() - 0.5) * 200, 5 + Math.floor(rand() * 3), narrow ? 24 : 36, narrow ? 14 : 20, right ? 'var(--contour-b)' : 'var(--contour-a)', right ? 0.24 : 0.14, 1.1);
+      var right = i % 2 === 1, sc = narrow ? 0.6 : 1;
+      var hx = (right ? main.r + (narrow ? 10 : 70) : main.l + (narrow ? 10 : 40)) + (rand() - 0.5) * 60, hy = i * step + (rand() - 0.5) * 200;
+      var ox = (rand() - 0.5) * 140 * sc, oy = (rand() - 0.5) * 120 * sc;
+      topo(hx, hy, 230 * sc, 210 * sc, [
+        { x: hx, y: hy, sx: (60 + rand() * 20) * sc, sy: (50 + rand() * 15) * sc, a: 1 },
+        { x: hx + ox, y: hy + oy, sx: 40 * sc, sy: 36 * sc, a: 0.5 },
+      ], 0.12, right ? 'var(--contour-b)' : 'var(--contour-a)', right ? 0.24 : 0.14);
     }
+  }
+  // marching squares: closed contour loops of the field z at level t, as point lists
+  function trace(z, nx, ny, g, x0, y0, t) {
+    var w = nx + 1, pt = {}, adj = {};
+    function at(i, j) { return z[j * w + i]; }
+    function edge(id, ax, ay, bx, by, va, vb) {
+      if (!pt[id]) { var u = (t - va) / (vb - va); pt[id] = [x0 + (ax + (bx - ax) * u) * g, y0 + (ay + (by - ay) * u) * g]; }
+      return id;
+    }
+    function link(a, b) { (adj[a] = adj[a] || []).push(b); (adj[b] = adj[b] || []).push(a); }
+    for (var j = 0; j < ny; j++) for (var i = 0; i < nx; i++) {
+      var a = at(i, j), b = at(i + 1, j), c = at(i + 1, j + 1), d = at(i, j + 1);
+      var cs = (a > t ? 8 : 0) | (b > t ? 4 : 0) | (c > t ? 2 : 0) | (d > t ? 1 : 0);
+      if (!cs || cs === 15) continue;
+      var T = function () { return edge('h' + i + '_' + j, i, j, i + 1, j, a, b); },
+          R = function () { return edge('v' + (i + 1) + '_' + j, i + 1, j, i + 1, j + 1, b, c); },
+          B = function () { return edge('h' + i + '_' + (j + 1), i, j + 1, i + 1, j + 1, d, c); },
+          Lf = function () { return edge('v' + i + '_' + j, i, j, i, j + 1, a, d); };
+      var mid = (a + b + c + d) / 4 > t;
+      switch (cs) {
+        case 1: case 14: link(Lf(), B()); break;
+        case 2: case 13: link(B(), R()); break;
+        case 3: case 12: link(Lf(), R()); break;
+        case 4: case 11: link(T(), R()); break;
+        case 6: case 9: link(T(), B()); break;
+        case 7: case 8: link(Lf(), T()); break;
+        case 5: if (mid) { link(Lf(), T()); link(B(), R()); } else { link(T(), R()); link(Lf(), B()); } break;
+        case 10: if (mid) { link(T(), R()); link(Lf(), B()); } else { link(Lf(), T()); link(B(), R()); } break;
+      }
+    }
+    var seen = {}, loops = [];
+    Object.keys(adj).forEach(function (s) {
+      if (seen[s]) return;
+      var line = [], prev = null, cur = s;
+      while (cur && !seen[cur]) {
+        seen[cur] = true; line.push(pt[cur]);
+        var nb = adj[cur], next = nb[0] !== prev && !seen[nb[0]] ? nb[0] : nb[1] !== prev && nb[1] && !seen[nb[1]] ? nb[1] : null;
+        prev = cur; cur = next;
+      }
+      if (line.length > 8) loops.push(line);
+    });
+    return loops;
+  }
+  // a closed Catmull-Rom curve through the points, as cubic Béziers
+  function smooth(p) {
+    var n = p.length, d = 'M' + f(p[0][0]) + ' ' + f(p[0][1]);
+    for (var i = 0; i < n; i++) {
+      var p0 = p[(i - 1 + n) % n], p1 = p[i], p2 = p[(i + 1) % n], p3 = p[(i + 2) % n];
+      d += 'C' + f(p1[0] + (p2[0] - p0[0]) / 6) + ' ' + f(p1[1] + (p2[1] - p0[1]) / 6) + ' ' + f(p2[0] - (p3[0] - p1[0]) / 6) + ' ' + f(p2[1] - (p3[1] - p1[1]) / 6) + ' ' + f(p2[0]) + ' ' + f(p2[1]);
+    }
+    return d + 'Z';
   }
   var heroLayers = [{ node: $('.ph-ring'), k: 0.08 }, { node: $('.ph picture'), k: 0.03 }];
   var pt = null;
