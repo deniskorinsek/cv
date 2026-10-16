@@ -241,8 +241,8 @@
     parallax();
   }
 
-  // parallax: topographic contour lines behind the portrait and a few hills in the margins, each map at its own depth.
-  // Every map is one smooth height field traced with marching squares, so its lines never cross.
+  // parallax: one quiet topographic map behind the portrait (or the page heading).
+  // The map is one smooth height field traced with marching squares, so its lines never cross.
   function terrain(H, narrow, box, main) {
     var rand = rng(20170901);
     // one height field (a few soft peaks, gently warped) traced into closed contour lines
@@ -270,31 +270,22 @@
       }
       S.para.push({ node: grp, base: cy, k: k });
     }
+    // one quiet map only: behind the portrait on the homepage, beside the heading elsewhere
     var ph = $('.ph');
     if (ph) {
       var pb = box(ph), pcx = pb.l + pb.h / 2, pcy = pb.t + pb.h / 2, s = narrow ? 0.5 : 1;
-      topo(pcx, pcy + 30 * s, 480 * s, 400 * s, [
-        { x: pcx + 50 * s, y: pcy - 30 * s, sx: 150 * s, sy: 115 * s, a: 1 },
-        { x: pcx - 190 * s, y: pcy + 170 * s, sx: 95 * s, sy: 80 * s, a: 0.72 },
-        { x: pcx + 230 * s, y: pcy + 200 * s, sx: 70 * s, sy: 60 * s, a: 0.45 },
-      ], 0.085, 'var(--contour-a)', 0.12);
+      topo(pcx, pcy + 20 * s, 420 * s, 340 * s, [
+        { x: pcx + 40 * s, y: pcy - 20 * s, sx: 140 * s, sy: 110 * s, a: 1 },
+        { x: pcx - 170 * s, y: pcy + 150 * s, sx: 80 * s, sy: 70 * s, a: 0.55 },
+      ], 0.16, 'var(--contour-a)', 0.1);
     } else {
       var sb = box(startEl), hx0 = main.r - (narrow ? 20 : 120), hy0 = sb.t + 60, s0 = narrow ? 0.6 : 1;
       topo(hx0, hy0, 300 * s0, 260 * s0, [
         { x: hx0, y: hy0, sx: 105 * s0, sy: 85 * s0, a: 1 },
         { x: hx0 - 120 * s0, y: hy0 + 90 * s0, sx: 60 * s0, sy: 55 * s0, a: 0.55 },
-      ], 0.1, 'var(--contour-a)', 0.2);
+      ], 0.16, 'var(--contour-a)', 0.1);
     }
-    var step = narrow ? 1400 : 900, n = Math.ceil(H / step);
-    for (var i = 1; i < n; i++) {
-      var right = i % 2 === 1, sc = narrow ? 0.6 : 1;
-      var hx = (right ? main.r + (narrow ? 10 : 70) : main.l + (narrow ? 10 : 40)) + (rand() - 0.5) * 60, hy = i * step + (rand() - 0.5) * 200;
-      var ox = (rand() - 0.5) * 140 * sc, oy = (rand() - 0.5) * 120 * sc;
-      topo(hx, hy, 230 * sc, 210 * sc, [
-        { x: hx, y: hy, sx: (60 + rand() * 20) * sc, sy: (50 + rand() * 15) * sc, a: 1 },
-        { x: hx + ox, y: hy + oy, sx: 40 * sc, sy: 36 * sc, a: 0.5 },
-      ], 0.12, right ? 'var(--contour-b)' : 'var(--contour-a)', right ? 0.24 : 0.14);
-    }
+    S.para[S.para.length - 1].node.setAttribute('opacity', '.75');
   }
   // marching squares: closed contour loops of the field z at level t, as point lists
   function trace(z, nx, ny, g, x0, y0, t) {
