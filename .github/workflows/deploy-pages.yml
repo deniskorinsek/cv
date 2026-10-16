@@ -1,0 +1,76 @@
+# Builds the site and deploys it to GitHub Pages.
+#
+# It only runs when started by hand (Actions → "Deploy to GitHub Pages" → Run workflow),
+# so nothing is published by accident. Before the first run, set
+# Settings → Pages → Build and deployment → Source to "GitHub Actions".
+#
+# The public address and base path come from GitHub itself, so the same workflow works
+# for a user site (deniskorinsek.github.io), a project site (deniskorinsek.github.io/<repo>/)
+# and a custom domain.
+#
+# "publish" builds add canonical URLs and a sitemap, and refuse to run until the launch
+# confirmations in content/site.json are set to true (see CONTENT-CHECKLIST.md).
+# "review" builds deploy the same pages marked noindex, for sharing a preview.
+
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Build mode
+        type: choice
+        options:
+          - publish
+          - review
+        default: publish
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Read the Pages address
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Build (${{ inputs.mode }})
+        run: node scripts/build.mjs ${{ inputs.mode == 'publish' && '--publish' || '' }}
+        env:
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      - name: Check the build
+        run: node scripts/check.mjs
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

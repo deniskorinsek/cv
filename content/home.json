@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Senior Android Engineer & Engineering Leader",
+    "lead": "10+ years building mobile solutions in banking, fintech and payments, combining hands-on engineering with team leadership.",
+    "primaryAction": {
+      "label": "Explore my experience",
+      "href": "#career"
+    },
+    "secondaryAction": {
+      "label": "Get in touch",
+      "href": "#contact"
+    }
+  },
+  "figures": [
+    {
+      "label": "Experience",
+      "value": "10+",
+      "text": "years of Android development"
+    },
+    {
+      "label": "Platform reach",
+      "value": "100+",
+      "text": "Swiss banks served by the banking platform I build for"
+    },
+    {
+      "label": "Team",
+      "value": "5",
+      "text": "direct reports today, after line-managing up to 10 Android engineers"
+    },
+    {
+      "label": "Hiring",
+      "value": "40+",
+      "text": "technical interviews conducted"
+    }
+  ],
+  "career": {
+    "eyebrow": "Career at a glance",
+    "heading": "One company since 2017",
+    "intro": "Since September 2017 I have been with one company: Kamino, which Netcetera acquired in 2023, now G+D Netcetera. Each title is split into its technical and its leadership part.",
+    "rolesLabel": "Role progression",
+    "note": "One line, one company: its colour changes where Kamino became part of Netcetera. Earlier employers are listed further down."
+  },
+  "paths": {
+    "eyebrow": "Technical and leadership",
+    "heading": "Two paths, one career",
+    "intro": "The technical path follows what I build. The leadership path follows the people and the delivery I am responsible for. Both run through the same company and the same years."
+  },
+  "earlier": {
+    "eyebrow": "Before Kamino",
+    "heading": "Earlier experience"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "heading": "Get in touch",
+    "text": "I’m open to remote-first and hybrid roles where I can lead mobile teams and take responsibility for delivery. Email is the best way to reach me.",
+    "rolesLabel": "Roles I’m interested in",
+    "roles": [
+      "Android / Mobile Lead",
+      "Engineering Manager",
+      "Head of Mobile Engineering",
+      "Technical Delivery Manager",
+      "Technical Program Manager",
+      "Software Development Manager"
+    ]
+  }
+}

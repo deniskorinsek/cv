@@ -1,0 +1,36 @@
+{
+  "education": {
+    "heading": "Education",
+    "institution": "University of Ljubljana",
+    "faculty": "Faculty of Computer and Information Science",
+    "degrees": [
+      {
+        "title": "Master’s Degree in Computer Science and Informatics Education",
+        "start": "2014",
+        "end": "2018"
+      },
+      {
+        "title": "Bachelor’s Degree in Computer Science and Informatics",
+        "start": "2011",
+        "end": "2014"
+      }
+    ]
+  },
+  "languages": {
+    "heading": "Languages",
+    "items": [
+      {
+        "name": "Slovenian",
+        "level": "Native"
+      },
+      {
+        "name": "English",
+        "level": "Professional working proficiency"
+      },
+      {
+        "name": "Croatian / Serbian",
+        "level": "Basic conversational"
+      }
+    ]
+  }
+}

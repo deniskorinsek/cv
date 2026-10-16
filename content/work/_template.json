@@ -1,0 +1,32 @@
+{
+  "slug": "example-slug",
+  "published": false,
+  "order": 3,
+  "kind": "Engagement",
+  "title": "Engagement title",
+  "shortTitle": "Short title",
+  "description": "One or two sentences for search results and link previews.",
+  "lede": "One or two sentences that open the page.",
+  "meta": {
+    "organization": "Company",
+    "role": "Your role",
+    "start": "2024-01",
+    "end": null,
+    "domains": [
+      "Domain"
+    ]
+  },
+  "technical": [
+    [
+      "Label",
+      "What you built or decided."
+    ]
+  ],
+  "leadership": [
+    [
+      "Label",
+      "Who you led, coordinated or mentored, and how."
+    ]
+  ],
+  "note": "This summary covers my own role and responsibilities, not the product as a whole."
+}

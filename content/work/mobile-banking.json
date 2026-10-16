@@ -1,0 +1,52 @@
+{
+  "slug": "mobile-banking",
+  "published": true,
+  "order": 1,
+  "kind": "Engagement",
+  "title": "Swiss Mobile Banking Platform",
+  "shortTitle": "Swiss banking platform",
+  "description": "Denis Korinšek’s Android engineering and leadership on a shared mobile banking platform serving 100+ Swiss banks, at G+D Netcetera since November 2023.",
+  "lede": "Android feature development for a shared mobile banking platform serving 100+ Swiss banks, combining reusable platform functionality with bank-specific customizations.",
+  "meta": {
+    "organization": "G+D Netcetera",
+    "role": "Senior Android Developer · Team Lead · Line Manager",
+    "start": "2023-11",
+    "end": null,
+    "domains": [
+      "Mobile banking"
+    ]
+  },
+  "technical": [
+    [
+      "Card management & banking features",
+      "Developed card-management, account and transaction features, contributing to architectural decisions, business logic and banking service integrations."
+    ],
+    [
+      "Secure integrations",
+      "Designed and implemented secure WebView integrations with deep-link handling and security controls."
+    ],
+    [
+      "Android modernization",
+      "Contributed to the gradual migration from XML to Jetpack Compose, developing new Compose screens and reusable UI components."
+    ],
+    [
+      "Multi-contract & multi-device",
+      "Designed and implemented functionality for managing multiple banking contracts and accounts, accessing contracts across devices and managing registered devices."
+    ]
+  ],
+  "leadership": [
+    [
+      "Engineering delivery",
+      "Lead Android development and feature delivery for the platform, covering shared functionality and client-specific requirements."
+    ],
+    [
+      "Technical leadership",
+      "Guide technical decisions, conduct code reviews, resolve complex issues and keep engineering quality high."
+    ],
+    [
+      "Stakeholder collaboration",
+      "Coordinate delivery priorities, address technical blockers and work directly with clients and distributed engineering teams across Slovenia, Switzerland, Austria and North Macedonia."
+    ]
+  ],
+  "note": "This summary covers my own role and responsibilities, not the product as a whole."
+}

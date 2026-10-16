@@ -1,0 +1,12 @@
+# Build output (GitHub Actions builds the site; see README.md)
+dist/
+
+# Dependencies (the project has none, but optional tools may add them)
+node_modules/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

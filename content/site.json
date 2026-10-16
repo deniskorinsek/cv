@@ -1,0 +1,67 @@
+{
+  "name": "Denis Korinšek",
+  "roleLine": "Senior Android Engineer & Engineering Leader",
+  "location": "Prevalje, Slovenia",
+  "timezone": "Central European Time (CET/CEST)",
+  "workPreference": "Open to remote-first and hybrid roles",
+  "email": "korinsekdenis@gmail.com",
+  "profiles": [
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/denis-korinsek",
+      "display": "linkedin.com/in/denis-korinsek"
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "url": "https://github.com/deniskorinsek",
+      "display": "github.com/deniskorinsek"
+    }
+  ],
+  "portrait": {
+    "basename": "assets/img/portrait/denis-korinsek",
+    "widths": [
+      320,
+      480,
+      720,
+      960
+    ],
+    "formats": [
+      "avif",
+      "webp",
+      "jpg"
+    ],
+    "alt": "Portrait of Denis Korinšek wearing glasses and a dark blazer"
+  },
+  "cvs": [
+    {
+      "id": "technical",
+      "label": "Technical CV",
+      "title": "Senior Android Engineer | Technical Lead",
+      "path": "assets/cv/Denis-Korinsek-CV-Technical.pdf"
+    },
+    {
+      "id": "leadership",
+      "label": "Leadership CV",
+      "title": "Android Team Lead | Line Manager",
+      "path": "assets/cv/Denis-Korinsek-CV-Leadership.pdf"
+    }
+  ],
+  "seo": {
+    "homeTitle": "Denis Korinšek — Senior Android Engineer & Engineering Leader",
+    "homeDescription": "Senior Android engineer and engineering leader in Slovenia with 10+ years building mobile solutions in banking, fintech and payments, combining hands-on engineering with team leadership.",
+    "socialImage": "assets/img/social-card.jpg",
+    "socialImageWidth": 1200,
+    "socialImageHeight": 630,
+    "socialImageAlt": "Denis Korinšek, Senior Android Engineer and Engineering Leader, with a technical and a leadership trail.",
+    "themeColor": "#f8f7f4"
+  },
+  "launch": {
+    "siteUrl": "",
+    "confirmations": {
+      "currentEmployment": false,
+      "contentReviewed": false
+    }
+  }
+}

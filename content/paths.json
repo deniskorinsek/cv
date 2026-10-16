@@ -1,0 +1,214 @@
+{
+  "technical": {
+    "label": "Technical path",
+    "role": "Senior Android Engineer | Technical Lead",
+    "profile": "Android development across banking, fintech, payments and digital identity, working across legacy Java and modern Kotlin and Jetpack Compose.",
+    "chips": [
+      "Kotlin",
+      "Java",
+      "Jetpack Compose",
+      "Clean Architecture",
+      "Modularization",
+      "Coroutines & Flow",
+      "Security & cryptography",
+      "AI-assisted engineering"
+    ],
+    "eras": [
+      {
+        "era": "g",
+        "stops": [
+          {
+            "title": "Swiss Mobile Banking Platform",
+            "company": "G+D Netcetera",
+            "start": "2023-11",
+            "end": null,
+            "caseStudy": "mobile-banking",
+            "summary": "Android features for a shared mobile banking platform serving 100+ Swiss banks, combining reusable platform functionality with bank-specific customizations.",
+            "points": [
+              [
+                "Card management & banking features",
+                "Card-management, account and transaction features, contributing to architectural decisions, business logic and banking service integrations."
+              ],
+              [
+                "Secure integrations",
+                "Secure WebView integrations with deep-link handling and security controls."
+              ],
+              [
+                "Android modernization",
+                "Contributing to the gradual migration from XML to Jetpack Compose, with new Compose screens and reusable UI components."
+              ],
+              [
+                "Multi-contract & multi-device",
+                "Managing multiple banking contracts and accounts, accessing contracts across devices and managing registered devices."
+              ],
+              [
+                "Technical leadership",
+                "I guide technical decisions, review code and resolve complex issues."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "era": "gid",
+        "stops": [
+          {
+            "title": "GlobalID — Digital Identity & Fintech Platform",
+            "company": "Kamino",
+            "start": "2020-05",
+            "end": "2023-10",
+            "caseStudy": "globalid",
+            "summary": "Android development for an international digital identity and financial services platform.",
+            "points": [
+              [
+                "Uphold integration",
+                "Led the end-to-end Android integration for account linking, balances, cryptocurrency trading and fund transfers."
+              ],
+              [
+                "Non-custodial wallet",
+                "Contributed to the architecture and implementation of an ERC-20 and Solana token wallet on Trust Wallet Core, including key management and transaction signing."
+              ],
+              [
+                "USBC token",
+                "Developed an ERC-20 token on a private network that grew into a new business."
+              ],
+              [
+                "Identity & messaging",
+                "Developed digital identity verification and in-app chat features."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "era": "intl",
+        "stops": [
+          {
+            "title": "International Client Projects",
+            "company": "Kamino",
+            "start": "2017-09",
+            "end": "2020-04",
+            "summary": "Android applications for international clients across multiple agency projects.",
+            "points": []
+          }
+        ]
+      }
+    ],
+    "end": "First role at Kamino: Android Developer, September 2017."
+  },
+  "leadership": {
+    "label": "Leadership path",
+    "role": "Android Team Lead | Line Manager",
+    "profile": "People management, technical leadership and software delivery, with a strong focus on collaborative, trust-based engineering teams.",
+    "chips": [
+      "Line management",
+      "Performance management",
+      "Career development",
+      "Hiring",
+      "Mentoring",
+      "Delivery planning",
+      "Cross-team coordination",
+      "Client communication"
+    ],
+    "eras": [
+      {
+        "era": "g",
+        "stops": [
+          {
+            "title": "People management & team development",
+            "company": "G+D Netcetera",
+            "start": "2023-05",
+            "end": null,
+            "summary": "",
+            "points": [
+              [
+                "Team leadership",
+                "Line-managed up to 10 Android engineers; responsible for 5 direct reports today."
+              ],
+              [
+                "Career development",
+                "Performance assessments and individual development plans, backed by regular 1:1s and feedback."
+              ],
+              [
+                "Engineer growth",
+                "Everyone I have line-managed advanced at least one internal seniority level, including one to the company’s highest engineering grade."
+              ],
+              [
+                "Recruitment",
+                "40+ technical interviews; I contribute to hiring, onboarding, promotion and compensation recommendations."
+              ],
+              [
+                "AI mentoring",
+                "I help engineers adopt AI-assisted development practices and tools."
+              ]
+            ]
+          },
+          {
+            "title": "Engineering leadership & delivery",
+            "company": "G+D Netcetera",
+            "start": "2023-05",
+            "end": null,
+            "summary": "",
+            "caseStudy": "mobile-banking",
+            "points": [
+              [
+                "Engineering delivery",
+                "I lead Android development and feature delivery for a mobile banking platform serving 100+ Swiss banks."
+              ],
+              [
+                "Technical leadership",
+                "Hands-on development combined with architectural decisions, technical guidance, code reviews and engineering quality."
+              ],
+              [
+                "Stakeholder collaboration",
+                "I coordinate delivery priorities, address technical blockers and work directly with clients and teams across Slovenia, Switzerland, Austria and North Macedonia."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "era": "gid",
+        "stops": [
+          {
+            "title": "GlobalID — Digital Identity & Fintech Platform",
+            "company": "Kamino",
+            "start": "2020-05",
+            "end": "2023-10",
+            "caseStudy": "globalid",
+            "summary": "Technical leadership for an international digital identity and financial services platform.",
+            "points": [
+              [
+                "Android leadership",
+                "Technical lead for 4–5 Android developers, with architectural guidance, code reviews and mentoring. I stayed on the project at the client’s request during the organizational transition."
+              ],
+              [
+                "International collaboration",
+                "Coordinated Android, iOS, backend and QA teams in Slovenia, the United States, Ukraine, Colombia and Egypt."
+              ],
+              [
+                "Partner collaboration",
+                "Cleared recurring Uphold integration blockers by working directly with the external partner."
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "end": "First lead role: Android Tech Lead, Payments, May 2020."
+  },
+  "eraMarks": {
+    "g": [
+      "2023 – today",
+      "G+D Netcetera"
+    ],
+    "gid": [
+      "2020 – 2023",
+      "Kamino"
+    ],
+    "intl": [
+      "2017 – 2020",
+      "Kamino"
+    ]
+  }
+}

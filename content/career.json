@@ -1,0 +1,117 @@
+{
+  "earlier": [
+    {
+      "company": "Ceneje.si",
+      "role": "Full-Stack & Android Developer",
+      "start": "2015",
+      "end": "2017",
+      "summary": "Frontend, backend and Android development for the Ceneje.si price comparison platform."
+    },
+    {
+      "company": "Kivi Com",
+      "role": "Full-Stack Developer",
+      "start": "2014",
+      "end": "2015",
+      "summary": "Web development for multiple clients, including the Chamber of Commerce and Industry of Slovenia (GZS)."
+    },
+    {
+      "company": "MAOP",
+      "role": "Full-Stack Developer",
+      "start": "2013",
+      "end": "2014",
+      "summary": ""
+    }
+  ],
+  "current": {
+    "label": "Kamino → Netcetera (now G+D Netcetera)",
+    "start": "2017-09",
+    "end": null,
+    "before": {
+      "name": "Kamino",
+      "start": "2017-09",
+      "end": "2023"
+    },
+    "after": {
+      "name": "G+D Netcetera",
+      "start": "2023",
+      "end": null
+    },
+    "acquisition": {
+      "year": "2023",
+      "text": "Kamino acquired by Netcetera"
+    }
+  },
+  "roles": [
+    {
+      "company": "G+D Netcetera",
+      "start": "2025-01",
+      "end": null,
+      "parts": [
+        [
+          "Senior Android Developer",
+          "t"
+        ],
+        [
+          "Team Lead",
+          "l"
+        ],
+        [
+          "Line Manager",
+          "l"
+        ]
+      ]
+    },
+    {
+      "company": "G+D Netcetera",
+      "start": "2023-05",
+      "end": "2024-12",
+      "parts": [
+        [
+          "Senior Android Developer",
+          "t"
+        ],
+        [
+          "Line Manager",
+          "l"
+        ]
+      ]
+    },
+    {
+      "company": "Kamino",
+      "start": "2021-11",
+      "end": "2023-10",
+      "parts": [
+        [
+          "Team Lead",
+          "l"
+        ],
+        [
+          "Android Developer",
+          "t"
+        ]
+      ]
+    },
+    {
+      "company": "Kamino",
+      "start": "2020-05",
+      "end": "2021-11",
+      "parts": [
+        [
+          "Android Tech Lead, Payments",
+          "tl"
+        ]
+      ]
+    },
+    {
+      "company": "Kamino",
+      "start": "2017-09",
+      "end": "2020-04",
+      "parts": [
+        [
+          "Android Developer",
+          "t"
+        ]
+      ]
+    }
+  ]
+}

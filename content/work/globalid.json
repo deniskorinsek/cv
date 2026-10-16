@@ -1,0 +1,54 @@
+{
+  "slug": "globalid",
+  "published": true,
+  "order": 2,
+  "kind": "Engagement within Kamino",
+  "title": "GlobalID — Digital Identity & Fintech Platform",
+  "shortTitle": "GlobalID",
+  "description": "Denis Korinšek’s technical leadership and Android development on GlobalID, an international digital identity and financial services platform, as an engagement within Kamino from 2020 to 2023.",
+  "lede": "Technical leadership and Android development for an international digital identity and financial services platform, as an engagement within Kamino.",
+  "meta": {
+    "organization": "Kamino",
+    "engagement": "GlobalID, within Kamino",
+    "role": "Android Tech Lead, Payments, then Team Lead",
+    "start": "2020-05",
+    "end": "2023-10",
+    "domains": [
+      "Digital identity",
+      "Fintech"
+    ]
+  },
+  "technical": [
+    [
+      "Uphold integration",
+      "Led the end-to-end Android integration enabling account linking, balance management, cryptocurrency trading and fund transfers."
+    ],
+    [
+      "Non-custodial wallet",
+      "Contributed to the architecture and implementation of an ERC-20 and Solana token wallet using Trust Wallet Core, including key management and transaction signing."
+    ],
+    [
+      "USBC token",
+      "Developed an ERC-20 token on a private network that grew into a new business."
+    ],
+    [
+      "Identity & messaging",
+      "Developed digital identity verification and in-app chat features."
+    ]
+  ],
+  "leadership": [
+    [
+      "Android leadership",
+      "Technical lead for 4–5 Android developers, providing architectural guidance, code reviews and mentoring; remained on the project at the client’s request during the organizational transition."
+    ],
+    [
+      "International collaboration",
+      "Coordinated technical work across Android, iOS, backend and QA teams in Slovenia, the United States, Ukraine, Colombia and Egypt."
+    ],
+    [
+      "Partner collaboration",
+      "Resolved recurring Uphold integration blockers through direct collaboration with the external partner."
+    ]
+  ],
+  "note": "This summary covers my own contribution. It doesn’t describe the GlobalID product as a whole."
+}
