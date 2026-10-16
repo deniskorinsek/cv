@@ -9,7 +9,7 @@
 # and a custom domain.
 #
 # "publish" builds add canonical URLs and a sitemap, and refuse to run until the launch
-# confirmations in content/site.json are set to true (see CONTENT-CHECKLIST.md).
+# confirmations in content/site.json are set to true (see README.md).
 # "review" builds deploy the same pages marked noindex, for sharing a preview.
 
 name: Deploy to GitHub Pages

@@ -96,7 +96,7 @@ function assertLaunchReady(options, site) {
   if (problems.length) {
     throw new BuildError(
       `Not ready to publish:\n  - ${problems.join('\n  - ')}\n` +
-        'Review CONTENT-CHECKLIST.md, then update content/site.json. Use the review build (without --publish) meanwhile.',
+        'Review the content, then update content/site.json. Use the review build (without --publish) meanwhile.',
     );
   }
 }

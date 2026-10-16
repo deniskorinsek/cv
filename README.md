@@ -64,7 +64,6 @@ scripts/
   portrait.mjs            Optional: regenerate the portrait images from a new photo
 .github/workflows/
   deploy-pages.yml        Manual "Deploy to GitHub Pages" workflow
-CONTENT-CHECKLIST.md      Where each statement comes from and what to confirm before launch
 ```
 
 ## Editing content
@@ -165,7 +164,8 @@ The publish build stops with a clear message until `content/site.json` has:
 }
 ```
 
-Set the two confirmations only after going through [CONTENT-CHECKLIST.md](CONTENT-CHECKLIST.md).
+Set the two confirmations only after reviewing the content against the CVs (the content checklist
+is kept locally and is not part of this repository).
 When the site is deployed by the GitHub workflow, the public URL comes from GitHub automatically, so
 `siteUrl` can stay empty; set it only for local publish builds.
 
@@ -224,7 +224,7 @@ git push -u origin main
 `dist/` is in `.gitignore`; GitHub builds the site from the sources.
 
 On a free GitHub plan, a repository that publishes to GitHub Pages must be public, so everything in
-it, including `CONTENT-CHECKLIST.md` and any unpublished engagement summaries in `content/work/`, can be
+it, including any unpublished engagement summaries in `content/work/`, can be
 read by anyone. Remove anything you don't want public before pushing.
 
 ### 3. Turn on Pages
