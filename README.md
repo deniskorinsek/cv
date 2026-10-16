@@ -175,6 +175,28 @@ domain), because crawlers ignore a `robots.txt` inside a sub-folder. For a proje
 
 ## Deploying to GitHub Pages
 
+### Simplest: upload the ready-made site in `docs/` (no Node needed)
+
+`docs/` holds the finished site as plain HTML, CSS, JavaScript, fonts, images and PDFs, which is
+exactly what GitHub Pages serves. Nothing has to be built.
+
+1. Create a public repository on GitHub with any name, e.g. `portfolio`.
+2. Upload this folder: push it with git, or use **Add file → Upload files** on github.com and drag
+   in the project (at least the `docs/` folder).
+3. **Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` → `/docs`**.
+4. After a minute the site is at `https://deniskorinsek.github.io/<repository>/`.
+
+`docs/` is set up for a project site like this. All pages use relative links, and `docs/404.html`
+detects the `/<repository>/` part of the address itself, so missing pages at any depth stay
+styled. For a user site (`deniskorinsek.github.io`) or a custom domain, delete the `<script>` line
+right after `<base href="/">` in `docs/404.html`.
+
+`docs/` is a review build (`noindex`, hidden from search engines). To change content later, edit
+`content/*.json` and rebuild with Node (`node scripts/build.mjs --out docs`), or use the
+GitHub Actions workflow below, which runs Node on GitHub's servers.
+
+### Alternative: build on GitHub with Actions
+
 Nothing is published automatically: the workflow only runs when you start it.
 
 ### 1. Choose the address
