@@ -21,7 +21,7 @@ import { raw, jsonLd } from '../src/templates/html.mjs';
 import { formatBytes } from '../src/templates/format.mjs';
 import { layout } from '../src/templates/layout.mjs';
 import { homePage } from '../src/templates/home.mjs';
-import { caseStudyPage, workIndexPage } from '../src/templates/work.mjs';
+import { caseStudyPage } from '../src/templates/work.mjs';
 import { notFoundPage } from '../src/templates/not-found.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -136,11 +136,6 @@ export async function build(cliOptions = {}) {
       description: content.site.seo.homeDescription,
       content: homePage(ctx, content),
       head: jsonLd(personSchema(ctx, content)),
-    }) },
-    { url: 'work/', file: 'work/index.html', currentNav: 'work', render: (ctx) => ({
-      title: `Engagements — ${content.site.name}`,
-      description: `Engagement summaries by ${content.site.name}: the platforms behind his technical and leadership work, in his own role.`,
-      content: workIndexPage(ctx, content),
     }) },
     ...content.studies.map((study) => ({
       url: `work/${study.slug}/`,

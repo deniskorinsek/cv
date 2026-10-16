@@ -9,7 +9,6 @@ export const NAV = [
   { id: 'career', label: 'Career' },
   { id: 'technical', label: 'Technical', tone: 't' },
   { id: 'leadership', label: 'Leadership', tone: 'l' },
-  { id: 'work', label: 'Engagements', page: 'work/' },
 ];
 
 /* Runs before first paint: marks JavaScript support. The page is complete without it. */
@@ -79,8 +78,7 @@ function footer(ctx) {
     </div>
     <ul class="foot-links">
       <li><a href="mailto:${site.email}">Email</a></li>
-${site.profiles.map((profile) => html`      <li><a href="${profile.url}" rel="me">${profile.label}</a></li>\n`)}      <li><a href="${ctx.link('work/')}">Engagements</a></li>
-${ctx.cvs.map((cv) => html`      <li><a href="${cv.href}" download>${cv.label} (PDF)</a></li>\n`)}
+${site.profiles.map((profile) => html`      <li><a href="${profile.url}" rel="me">${profile.label}</a></li>\n`)}${ctx.cvs.map((cv) => html`      <li><a href="${cv.href}" download>${cv.label} (PDF)</a></li>\n`)}
     </ul>
   </div>
   <div class="foot-bottom">

@@ -104,7 +104,7 @@ path. Earlier employers are not repeated here; they have their own section (`car
 
 ### Engagement pages
 
-Each file in `content/work/` becomes a page at `/work/<slug>/` and a card on *Engagements*.
+Each file in `content/work/` becomes a page at `/work/<slug>/`, listed under *More of my work* on the other engagement pages.
 
 1. Copy `content/work/_template.json` to `content/work/<slug>.json` (lowercase letters, digits and
    hyphens; the file name must match `"slug"`).

@@ -24,7 +24,7 @@ ${rows.map(([label, value]) => html`      <div><dt>${label}</dt><dd>${value}</dd
 export function caseStudyPage(ctx, study, content) {
   const others = content.studies.filter((s) => s.slug !== study.slug);
   return html`<section class="case-hero" aria-labelledby="case-t" data-trail-start>
-  ${breadcrumb([{ label: 'Home', href: ctx.link('') }, { label: 'Engagements', href: ctx.link('work/') }, { label: study.shortTitle }])}
+  ${breadcrumb([{ label: 'Home', href: ctx.link('') }, { label: study.shortTitle }])}
   ${sectionHead({ id: 'case', eyebrow: `${study.kind} · ${study.meta.organization}`, heading: study.title, level: 1 })}
   <p class="case-lede">${study.lede}</p>
   ${metaList(study)}
@@ -52,17 +52,5 @@ ${others.length ? html`<section class="sec" id="more" aria-labelledby="more-t">
   </div>
   <p class="back"><a href="${ctx.section('paths')}">${icon('arrowLeft')} Back to the two paths</a></p>
 </section>` : ''}
-${contactCard(ctx, content.home.contact, { roles: false })}`;
-}
-
-export function workIndexPage(ctx, content) {
-  return html`<section class="case-hero" aria-labelledby="work-t" data-trail-start>
-  ${breadcrumb([{ label: 'Home', href: ctx.link('') }, { label: 'Engagements' }])}
-  ${sectionHead({ id: 'work', eyebrow: 'Engagements', heading: 'Platforms I have built for', level: 1 })}
-  <p class="case-lede">Short summaries of the engagements behind both paths. Each one covers my own role and responsibilities, not the product as a whole.</p>
-  <div class="studies">
-    ${content.studies.map((s) => studyCard(ctx, s, 2))}
-  </div>
-</section>
 ${contactCard(ctx, content.home.contact, { roles: false })}`;
 }
