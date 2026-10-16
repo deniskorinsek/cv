@@ -53,7 +53,7 @@
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --trail: 220px;
   --bar-h: 64px;
-  color-scheme: light;
+  color-scheme: only light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--bg); scroll-padding-top: calc(var(--bar-h) + 16px); }

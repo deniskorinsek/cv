@@ -27,7 +27,7 @@ function head(ctx, page) {
 <title>${page.title}</title>
 <meta name="description" content="${page.description}">
 ${robots && html`<meta name="robots" content="${robots}">\n`}${canonical && html`<link rel="canonical" href="${canonical}">\n`}<meta name="author" content="${site.name}">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="only light">
 <meta name="theme-color" content="${site.seo.themeColor}">
 <meta property="og:type" content="${page.ogType ?? 'website'}">
 <meta property="og:site_name" content="${site.name}">
