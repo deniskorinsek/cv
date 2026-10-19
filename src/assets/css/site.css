@@ -58,6 +58,12 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--bg); scroll-padding-top: calc(var(--bar-h) + 16px); }
 body { margin: 0; background: var(--bg); color: var(--text); font: 400 17px/1.62 var(--font); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+/* Samsung Internet forces its own dark mode unless a site styles dark mode itself.
+   This "dark" theme is the light one, so the design stays light everywhere. */
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: only light; }
+  html, body { background: var(--bg); color: var(--text); }
+}
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
 a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--tech); transition: color .2s ease; }
 a:hover { color: var(--tech-ink); }
