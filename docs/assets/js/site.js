@@ -48,7 +48,8 @@
     });
   });
 
-  /* ---------- light/dark switch: follows the system until the visitor chooses, then remembers ---------- */
+  /* ---------- light/dark switch: the boot script in <head> sets the scheme (the visitor's choice, else
+     light, or dark in Samsung Internet); the switch changes it and remembers the choice ---------- */
   var themeBtn = $('[data-theme-toggle]'), sysDark = window.matchMedia('(prefers-color-scheme: dark)');
   function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : sysDark.matches; }
   function syncTheme() {

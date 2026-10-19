@@ -138,12 +138,18 @@ Design tokens (colours, spacing, the trail width) are CSS custom properties at t
 `src/assets/css/site.css`. Terracotta (`--tech*`) marks the technical path and slate blue (`--lead*`)
 the leadership path.
 
-There are two colour schemes, light *paper* and dark *warm graphite*. The site follows the
-visitor's system setting until they use the switch in the header (moon / sun); the choice is kept in
-`localStorage` and applied before the page is drawn, as `<html data-theme="light|dark">`. The dark
-values live in one `@media (prefers-color-scheme: dark)` block that redefines the same tokens; the
-build (`scripts/lib/themes.mjs`) also applies that block when the visitor chooses dark, so the dark
-values are written only once. Components never use raw colours, so a new component gets both
+There are two colour schemes, light *paper* and dark *warm graphite*. A small script in `<head>`
+picks one before the page is drawn and sets it as `<html data-theme="light|dark">`:
+
+- a choice the visitor made with the switch in the header (moon / sun), kept in `localStorage`;
+- otherwise **light**, whatever the system setting;
+- except in **Samsung Internet**, which starts in **dark**: its own dark mode recolours light pages
+  and no site can switch it off, so there the designed dark scheme is shown instead.
+
+Without JavaScript the site follows the system setting. The dark values live in one
+`@media (prefers-color-scheme: dark)` block that redefines the same tokens; the build
+(`scripts/lib/themes.mjs`) also applies that block for `data-theme="dark"`, so the dark values are
+written only once. Components never use raw colours, so a new component gets both
 themes by using the tokens. Each dark step was chosen
 for the dark surface rather than inverted:
 

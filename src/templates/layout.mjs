@@ -11,11 +11,13 @@ export const NAV = [
   { id: 'leadership', label: 'Leadership', tone: 'l' },
 ];
 
-/* Runs before first paint: marks JavaScript support and applies a light/dark choice the visitor
-   made earlier, so the page never flashes in the wrong colours. The page is complete without it. */
+/* Runs before first paint: marks JavaScript support and picks the colour scheme, so the page never
+   flashes in the wrong colours. A choice the visitor made with the switch wins. Otherwise the site is
+   light, except in Samsung Internet: its own dark mode recolours any light page and cannot be turned
+   off by a site, so there the designed dark scheme is the default. The page is complete without it. */
 const BOOT_SCRIPT =
-  "var d=document.documentElement;d.classList.add('js');" +
-  "try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t)}catch(e){}";
+  "var d=document.documentElement;d.classList.add('js');var t;try{t=localStorage.getItem('theme')}catch(e){}" +
+  "if(t!=='light'&&t!=='dark')t=/SamsungBrowser/.test(navigator.userAgent)?'dark':'light';d.setAttribute('data-theme',t)";
 
 function head(ctx, page) {
   const { site } = ctx;
