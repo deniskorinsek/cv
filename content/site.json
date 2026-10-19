@@ -55,7 +55,8 @@
     "socialImageWidth": 1200,
     "socialImageHeight": 630,
     "socialImageAlt": "Denis Korinšek, Senior Android Engineer and Engineering Leader, with a technical and a leadership trail.",
-    "themeColor": "#f8f7f4"
+    "themeColor": "#f8f7f4",
+    "themeColorDark": "#171615"
   },
   "launch": {
     "siteUrl": "",

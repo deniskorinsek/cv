@@ -4,8 +4,8 @@
  * homepage the lanes split into a technical and a leadership trail for "Two paths" and
  * join again before the earlier years. Also: parallax contour lines, cards that settle
  * into place, the header state, section highlighting in the navigation and the
- * "Copy address" button, and "Highlight a path" in the career card. Everything on the
- * page is readable without this file.
+ * "Copy address" button, "Highlight a path" in the career card and the light/dark switch.
+ * Everything on the page is readable without this file.
  */
 (function () {
   'use strict';
@@ -47,6 +47,29 @@
       else selectIt();
     });
   });
+
+  /* ---------- light/dark switch: follows the system until the visitor chooses, then remembers ---------- */
+  var themeBtn = $('[data-theme-toggle]'), sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : sysDark.matches; }
+  function syncTheme() {
+    var dark = isDark();
+    if (themeBtn) { themeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false'); themeBtn.title = dark ? 'Switch to light mode' : 'Switch to dark mode'; }
+    if (root.getAttribute('data-theme')) {
+      var bgc = getComputedStyle(root).getPropertyValue('--bg').trim();
+      $$('meta[name="theme-color"]').forEach(function (m) { m.setAttribute('content', bgc); });
+    }
+  }
+  if (themeBtn) {
+    themeBtn.hidden = false;
+    themeBtn.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* private mode: the choice lasts for this page */ }
+      syncTheme();
+    });
+  }
+  if (sysDark.addEventListener) sysDark.addEventListener('change', syncTheme);
+  syncTheme();
 
   /* ---------- career card: the column labels become "Highlight a path" buttons ---------- */
   var journeyEl = $('.journey');
@@ -90,10 +113,10 @@
   var svg = mk('trail'), bg = mk('terrain');
   var fallback = page.querySelector('.no-js-trail'); if (fallback) fallback.parentNode.removeChild(fallback);
   var S = { walkY: 0, target: 0, marks: [], para: [], ready: false };
-  var C = { t: { band: 'var(--tech-band)', soft: 'var(--tech-soft)', dash: 'var(--tech-dash)', solid: 'var(--tech)' },
-            l: { band: 'var(--lead-band)', soft: 'var(--lead-soft)', dash: 'var(--lead-dash)', solid: 'var(--lead)' },
-            s: { band: 'var(--stone-band)', soft: 'var(--stone-soft)', dash: 'var(--stone-dash)', solid: 'var(--stone)' },
-            g: { band: 'var(--ghost)', soft: 'var(--ghost)', dash: 'var(--ghost-dash)', solid: 'var(--ghost-dash)' } };
+  // road colours come from the --road-* tokens, so each colour scheme can draw the road its own way:
+  // pastel fills on paper, a dark road surface with coloured edges at night
+  function lane(k, solid) { return { band: 'var(--road-' + k + '-edge)', soft: 'var(--road-' + k + '-fill)', dash: 'var(--road-' + k + '-dash)', solid: solid }; }
+  var C = { t: lane('t', 'var(--tech)'), l: lane('l', 'var(--lead)'), s: lane('s', 'var(--stone)'), g: lane('g', 'var(--ghost-dash)') };
   function el(name, attrs, parent) { var n = document.createElementNS(NS, name); for (var k in attrs) if (attrs[k] !== '' && attrs[k] != null) n.setAttribute(k, attrs[k]); (parent || svg).appendChild(n); return n; }
   function pinPath(x, y, r) {
     var cy = y - r * 1.75;
@@ -102,8 +125,8 @@
   }
   function pin(x, y, r, fill, delay) {
     var st = delay ? 'transition-delay:' + delay + 's' : '';
-    return [el('path', { d: pinPath(x, y, r), class: 'pin wait', fill: fill, stroke: '#fff', 'stroke-width': 1.5, style: st }),
-            el('circle', { cx: f(x), cy: f(y - r * 1.75), r: f(r * 0.36), fill: '#fff', class: 'pin wait', style: st })];
+    return [el('path', { d: pinPath(x, y, r), class: 'pin wait', fill: fill, stroke: 'var(--pin-hole)', 'stroke-width': 1.5, style: st }),
+            el('circle', { cx: f(x), cy: f(y - r * 1.75), r: f(r * 0.36), fill: 'var(--pin-hole)', class: 'pin wait', style: st })];
   }
   function mark(y, nodes, cls) { S.marks.push({ y: y, nodes: nodes, cls: cls || 'wait' }); }
   function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
@@ -165,7 +188,9 @@
       var extra = o.grow ? { class: 'grow', pathLength: 1 } : {};
       function p(stroke, sw, more) { var a = { d: d, fill: 'none', stroke: stroke, 'stroke-width': sw, 'stroke-linecap': 'round' }; for (var k in more) a[k] = more[k]; return el('path', a, g); }
       p(c.band, w, extra);
+      // the road surface; on narrow screens only where the scheme asks for it (.in-n)
       if (w > 9) p(c.soft, w - 3.5, extra);
+      else if (w > 6) p(c.soft, w - 3, { 'class': ((extra['class'] || '') + ' in-n').trim(), pathLength: extra.pathLength });
       p(c.dash, 1.3, { 'stroke-dasharray': '5 6', class: o.grow ? 'later' : '' });
       return g;
     }
@@ -214,6 +239,7 @@
       var sd = 'M' + f(x) + ' ' + f(y) + ' C' + f(x + (ex - x) * 0.45) + ' ' + f(y) + ' ' + f(x + (ex - x) * 0.55) + ' ' + f(ey) + ' ' + f(ex) + ' ' + f(ey);
       var sg = el('g', { class: 'wait' });
       el('path', { d: sd, class: 'grow', pathLength: 1, fill: 'none', stroke: c.band, 'stroke-width': narrow ? 4.5 : 6, 'stroke-linecap': 'round' }, sg);
+      el('path', { d: sd, class: 'grow in-n', pathLength: 1, fill: 'none', stroke: c.soft, 'stroke-width': narrow ? 1.8 : 3, 'stroke-linecap': 'round' }, sg);
       el('path', { d: sd, class: 'later', fill: 'none', stroke: c.dash, 'stroke-width': 1.2, 'stroke-dasharray': '3 3', 'stroke-linecap': 'round' }, sg);
       mark(y, [sg]);
       mark(y, pin(ex, ey, narrow ? 5 : 6.5, c.solid, 0.5));
@@ -230,7 +256,7 @@
     // map pins beside section headings
     $$('[data-pin]').forEach(function (n) { var b = box(n), y = b.t + b.h * 0.66; if (y > y0 && y < y1) mark(y, pin(xAt(y), y, narrow ? 7 : 9, 'var(--ink)')); });
     // one walker per lane
-    function walker(color) { var g = el('g', {}); el('circle', { r: narrow ? 11 : 14, fill: color, class: 'walker-halo' }, g); el('circle', { r: narrow ? 5.5 : 6.5, fill: 'var(--ink)', stroke: '#fff', 'stroke-width': 2.5 }, g); return g; }
+    function walker(color) { var g = el('g', {}); el('circle', { r: narrow ? 11 : 14, fill: color, class: 'walker-halo' }, g); el('circle', { r: narrow ? 5.5 : 6.5, fill: 'var(--ink)', stroke: 'var(--pin-hole)', 'stroke-width': 2.5 }, g); return g; }
     S.wT = walker('var(--tech)'); S.wL = walker('var(--lead)');
 
     terrain(H, narrow, box, main);

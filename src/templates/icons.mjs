@@ -5,6 +5,8 @@ const PATHS = {
   arrowRight: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
   arrowLeft: '<path d="M19 12H5"/><path d="m11 18-6-6 6-6"/>',
   arrowDown: '<path d="M12 5v14"/><path d="m6 13 6 6 6-6"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>',
   arrowUp: '<path d="M12 19V5"/><path d="m6 11 6-6 6 6"/>',
   external: '<path d="M7 17 17 7"/><path d="M8.5 7H17v8.5"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/>',

@@ -11,8 +11,11 @@ export const NAV = [
   { id: 'leadership', label: 'Leadership', tone: 'l' },
 ];
 
-/* Runs before first paint: marks JavaScript support. The page is complete without it. */
-const BOOT_SCRIPT = "document.documentElement.classList.add('js');";
+/* Runs before first paint: marks JavaScript support and applies a light/dark choice the visitor
+   made earlier, so the page never flashes in the wrong colours. The page is complete without it. */
+const BOOT_SCRIPT =
+  "var d=document.documentElement;d.classList.add('js');" +
+  "try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t)}catch(e){}";
 
 function head(ctx, page) {
   const { site } = ctx;
@@ -27,8 +30,9 @@ function head(ctx, page) {
 <title>${page.title}</title>
 <meta name="description" content="${page.description}">
 ${robots && html`<meta name="robots" content="${robots}">\n`}${canonical && html`<link rel="canonical" href="${canonical}">\n`}<meta name="author" content="${site.name}">
-<meta name="color-scheme" content="only light">
-<meta name="theme-color" content="${site.seo.themeColor}">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="${site.seo.themeColor}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="${site.seo.themeColorDark}" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="${page.ogType ?? 'website'}">
 <meta property="og:site_name" content="${site.name}">
 <meta property="og:title" content="${page.socialTitle ?? page.title}">
@@ -59,10 +63,13 @@ function header(ctx) {
   return html`<header class="top" data-topbar>
   <div class="top-in">
     <a class="brand" href="${homeHref}">${ctx.brandMark}<span>${ctx.site.name.toUpperCase()}</span></a>
-    <nav aria-label="Primary"><ul>
-      ${NAV.map((item) => navLink(ctx, item))}
-      <li><a class="pill" href="${ctx.section('contact')}" data-nav="contact">Contact</a></li>
-    </ul></nav>
+    <div class="top-r">
+      <nav aria-label="Primary"><ul>
+        ${NAV.map((item) => navLink(ctx, item))}
+        <li><a class="pill" href="${ctx.section('contact')}" data-nav="contact">Contact</a></li>
+      </ul></nav>
+      <button class="theme-toggle" type="button" aria-pressed="false" hidden data-theme-toggle><span class="vh">Dark mode</span>${icon('moon', 'icon i-moon')}${icon('sun', 'icon i-sun')}</button>
+    </div>
   </div>
 </header>`;
 }

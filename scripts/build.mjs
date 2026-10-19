@@ -17,6 +17,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadContent, ContentError } from './lib/content.mjs';
+import { themeable } from './lib/themes.mjs';
 import { raw, jsonLd } from '../src/templates/html.mjs';
 import { formatBytes } from '../src/templates/format.mjs';
 import { layout } from '../src/templates/layout.mjs';
@@ -118,8 +119,11 @@ export async function build(cliOptions = {}) {
     filter: (src) => !path.basename(src).startsWith('.'),
   });
 
+  // the dark block of the stylesheet also answers the light/dark switch (see lib/themes.mjs)
+  const css = themeable(await readFile(path.join(ROOT, 'src/assets/css/site.css'), 'utf8'));
+  await writeFile(path.join(outDir, 'assets/css/site.css'), css);
   const versions = {
-    'assets/css/site.css': hash(await readFile(path.join(ROOT, 'src/assets/css/site.css'))),
+    'assets/css/site.css': hash(css),
     'assets/js/site.js': hash(await readFile(path.join(ROOT, 'src/assets/js/site.js'))),
   };
   const markSvg = await readFile(path.join(ROOT, 'src/assets/icons/favicon.svg'), 'utf8');

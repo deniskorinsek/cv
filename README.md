@@ -3,7 +3,7 @@
 Personal portfolio for Denis Korinšek, *Senior Android Engineer & Engineering Leader*.
 
 The design follows his CVs: a winding trail in the left margin with two lanes, technical
-(terracotta) and leadership (green). After a short career overview the trail splits into two
+(terracotta) and leadership (slate blue). After a short career overview the trail splits into two
 paths that run side by side, one for each CV role in the same company, and joins again before
 the earlier years. White cards sit on warm paper; dates and labels are set in a mono face.
 
@@ -14,6 +14,7 @@ JavaScript templates, and a zero-dependency Node script builds plain HTML, CSS a
 - [Quick start](#quick-start)
 - [Project structure](#project-structure)
 - [Editing content](#editing-content)
+- [Design references](#design-references)
 - [Review build and publish build](#review-build-and-publish-build)
 - [Deploying to GitHub Pages](#deploying-to-github-pages)
 - [Checks](#checks)
@@ -51,14 +52,15 @@ content/                  All text on the site (edit these)
 src/
   templates/*.mjs         Page layout (HTML templates)
   assets/css/site.css     All styles; design tokens at the top
-  assets/js/site.js       The trail, parallax contour lines and small extras;
-                          the site works fully without it
+  assets/js/site.js       The trail, parallax contour lines, the light/dark switch and small
+                          extras; the site works fully without it
   assets/cv/              The two CV PDFs offered for download
   assets/fonts/           Self-hosted fonts and their licences
   assets/img/             Portrait and the social preview image
   assets/icons/           Favicon set (the two-path mark)
 scripts/
   build.mjs               Builds dist/
+  lib/themes.mjs          Lets the dark colour block also answer the light/dark switch
   serve.mjs               Local server that behaves like GitHub Pages
   check.mjs               Automated checks on the build
   portrait.mjs            Optional: regenerate the portrait images from a new photo
@@ -133,16 +135,53 @@ file to update it; the file size is shown automatically. A CV whose file is miss
 ### Colours, fonts and spacing
 
 Design tokens (colours, spacing, the trail width) are CSS custom properties at the top of
-`src/assets/css/site.css`. There is one light colour scheme for everyone, with every text colour
-chosen to meet WCAG AA on the background it sits on. Terracotta (`--tech*`) marks the technical
-path and green (`--lead*`) the leadership path; the pair was checked to stay distinguishable for
-colour-blind readers.
+`src/assets/css/site.css`. Terracotta (`--tech*`) marks the technical path and slate blue (`--lead*`)
+the leadership path.
+
+There are two colour schemes, light *paper* and dark *warm graphite*. The site follows the
+visitor's system setting until they use the switch in the header (moon / sun); the choice is kept in
+`localStorage` and applied before the page is drawn, as `<html data-theme="light|dark">`. The dark
+values live in one `@media (prefers-color-scheme: dark)` block that redefines the same tokens; the
+build (`scripts/lib/themes.mjs`) also applies that block when the visitor chooses dark, so the dark
+values are written only once. Components never use raw colours, so a new component gets both
+themes by using the tokens. Each dark step was chosen
+for the dark surface rather than inverted:
+
+- every text colour meets WCAG AA on the surfaces it sits on, in both themes;
+- the two lane colours pass a colour-vision check against the cards in both themes;
+- on the dark page, cards are lifted by a lighter surface and a faint top edge instead of shadows,
+  and the portrait is dimmed very slightly;
+- the road in the margin has its own tokens (`--road-*`): pastel fills on paper, and at night a dark
+  road surface with terracotta and slate-blue edges and soft centre dashes, because pastel fills
+  turn muddy on a dark page.
+
+If you change a colour, change it in both blocks and keep those three rules. The page's
+`theme-color` for each scheme is set in `content/site.json` (`seo.themeColor`, `seo.themeColorDark`).
 
 The fonts are Karla and JetBrains Mono, served from the site itself (SIL Open Font License; licences
 are in `src/assets/fonts/`).
 
 The social preview image (`src/assets/img/social-card.jpg`, 1200 × 630) and the favicon set in
 `src/assets/icons/` are static images in the same style.
+
+## Design references
+
+`design/` holds the approved design: screenshots of every page in both colour schemes, taken with
+motion turned off. Compare the site with them after any visual change.
+
+| File | What it shows |
+| --- | --- |
+| `design/light/*.jpg`, `design/dark/*.jpg` | Home (desktop, and the phone in two parts), an engagement page and the 404 page, at 1440 px and 390 px |
+| `design/palette-light-and-dark.png` | Every colour token in both schemes, with its WCAG contrast ratio |
+| `design/road-at-night-before.jpg`, `-after.jpg` | The road in the left margin before and after the dark-mode treatment |
+
+Differences from the screenshots that are deliberate:
+
+- The *Engagements* index page (`engagements-index-*.jpg`) and its menu item were removed: with two
+  engagements it only repeated links that are already on the home page.
+- The logo is the DK monogram (its K branches into the two paths), not the earlier fork mark. Its
+  technical arm is terracotta (`#e08455`) and its leadership arm slate blue (`#6a9fd4`).
+- Behind the portrait there is one quiet contour map; the hills along the page margins were removed.
 
 ## Review build and publish build
 
@@ -193,7 +232,22 @@ right after `<base href="/">` in `docs/404.html`.
 
 `docs/` is a review build (`noindex`, hidden from search engines). To change content later, edit
 `content/*.json` and rebuild with Node (`node scripts/build.mjs --out docs`), or use the
-GitHub Actions workflow below, which runs Node on GitHub's servers.
+GitHub Actions workflow below, which runs Node on GitHub's servers. A rebuild into `docs/` writes a
+new `404.html` without the project-site script, so add that line back afterwards.
+
+`docs/assets/css/site.css` is not a plain copy of `src/assets/css/site.css`: the build expands the
+dark colour block so it also answers the light/dark switch (see *Colours, fonts and spacing*). If you
+edit the stylesheet without Node, a Mac can run the same build step with its built-in JavaScript
+engine:
+
+```sh
+JSC=/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc
+{ sed 's/^export function/function/' scripts/lib/themes.mjs; echo 'print(themeable(read(arguments[0])));'; } > /tmp/themeable.js
+$JSC /tmp/themeable.js -- src/assets/css/site.css > docs/assets/css/site.css
+```
+
+Then change the `?v=` value after `site.css` in the four pages in `docs/`, so browsers load the new
+file.
 
 ### Alternative: build on GitHub with Actions
 
